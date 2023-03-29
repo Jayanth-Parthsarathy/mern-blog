@@ -11,6 +11,8 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then((res) => console.log("Connected to db"));
 app.use(express.json());
+app.use(express.static("public/images"));
+
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use("/user", userRouter);

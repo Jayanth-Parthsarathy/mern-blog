@@ -16,13 +16,12 @@ const register = asyncHandler(async (req, res) => {
   }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
-  const creatUser = await User.create({ email, password: hashedPassword });
+  const createUser = await User.create({ email, password: hashedPassword });
   const newUser = await User.findOne({ email });
   if (newUser) {
     res.status(201).json({
       _id: newUser._id,
       email: newUser.email,
-      password: newUser.password,
       token: generateJWT(newUser._id),
     });
   } else {
@@ -37,7 +36,6 @@ const login = asyncHandler(async (req, res) => {
     res.status(200).json({
       _id: user._id,
       email: user.email,
-      password: user.password,
       token: generateJWT(user._id),
     });
   } else {
